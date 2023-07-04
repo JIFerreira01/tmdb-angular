@@ -1,0 +1,9 @@
+.announcements {
+    position: absolute;
+    top: 27%;
+    left: 35%;
+}
+
+.announcements h3 {
+    font-size: 25px;
+}

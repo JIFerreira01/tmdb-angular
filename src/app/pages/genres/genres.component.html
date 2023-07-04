@@ -1,0 +1,21 @@
+<section class="content">
+    <aside class="content--menu">
+        <app-c-menu></app-c-menu>
+    </aside>
+    <section class="c-genres content-main">
+        <app-c-announcements *ngIf="movieID == undefined"></app-c-announcements>
+        <ng-template  *ngIf="movieID !== undefined" ngFor let-item [ngForOf]="genresList" let-i="index">
+            <mat-card class="c-genres__card">
+                <mat-card-header class="c-genres__card--header">
+                    <img mat-card-xl-image src="https://image.tmdb.org/t/p/original{{item.poster_path}}">
+                </mat-card-header>
+                <mat-card-content class="c-genres__card-content--container">
+                <mat-card-title class="c-genres__card--title" >{{item.title}} </mat-card-title>
+                <mat-card-subtitle class="c-genres__card--subtitle" >
+                    <a [routerLink]="['/movie-detail']" [queryParams]="{id: item.id}">Ver mais</a>
+                    </mat-card-subtitle>
+                </mat-card-content>
+            </mat-card>
+        </ng-template>
+    </section>
+</section>

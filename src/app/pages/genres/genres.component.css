@@ -1,0 +1,51 @@
+.content {
+  max-width: 1366px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 20% 80%;
+  grid-template-rows: 90vh;
+  grid-template-areas: "aside content-main";
+}
+
+.content--menu {
+  grid-area: aside;
+}
+
+.content--main {
+  grid-area: content-main;
+  position: relative;
+}
+
+.c-genres {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.c-genres__card {
+  max-width: 400px;
+  width: 192px;
+  margin: 10px 12px;
+  color: #000;
+  background: #fff;
+}
+
+.c-genres__card--header {
+  padding: 0;
+}
+
+.c-genres__card--title {
+  font-size: 16px;
+}
+
+.c-genres__card--subtitle {
+  text-align: right;
+}
+
+.c-genres__card--subtitle > a{
+  color: rgba(0,0,0,.6);
+  text-decoration: none;
+  text-transform: none;
+}
+
+  
+  

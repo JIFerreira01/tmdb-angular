@@ -1,0 +1,27 @@
+.appmain__toolbar {
+    display: flex;
+    justify-content: center;
+    background: rgba(3, 37, 65, 0.986);
+}
+
+.appmain__toolbar span {
+    width: 20%;
+}
+.appmain__toolbar__menu {
+    width: 80%;
+    padding-left: 25%;
+}
+
+.appmain__toolbar__menu ul li {
+    padding:  0 10px;
+    display: inline-block;
+}
+
+.appmain__toolbar__menu ul li a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.appmain__toolbar__menu ul li a:hover {
+    text-decoration: underline;
+}
