@@ -13,6 +13,8 @@ export class MovieDetailComponent implements OnInit{
   inscricao: Subscription = new Subscription();
   movieID: number = 0;
   movieDetail: any = new Object();
+  handleAnnouncements: any;
+  errorDispatched: Boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,13 +31,13 @@ export class MovieDetailComponent implements OnInit{
     this.verifyStateOfURL()
   }
 
-  async callService(genreId?: any) {
-    await this.movieService.getMovieDetail(genreId).subscribe({
+  callService(genreId?: any) {
+    this.movieService.getMovieDetail(genreId).subscribe({
       next: (data: any) => {
         this.movieDetail = data
         console.log(this.movieDetail)
       },
-      error: (error) => ( console.error('error', error) )
+      error: (error) => ( this.handleAnnouncements = 'no_results', this.errorDispatched = true )
     })
   }
 

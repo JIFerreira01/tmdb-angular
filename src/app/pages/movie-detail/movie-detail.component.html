@@ -1,4 +1,4 @@
-<section class="content">
+<section class="content" *ngIf="!errorDispatched">
     <section class="content__image">
         <img src="https://image.tmdb.org/t/p/original{{movieDetail.poster_path}}">
     </section>
@@ -26,4 +26,10 @@
             </button>
         </span>
     </section>
+</section>
+<section class="content" *ngIf="errorDispatched" >
+    <app-c-announcements [receiveHowAnnouncementShow]="handleAnnouncements"></app-c-announcements>
+    <button [routerLink]="['/genres']" mat-mini-fab color="accent">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
 </section>
