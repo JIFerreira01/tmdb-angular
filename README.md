@@ -1,6 +1,6 @@
 # Projeto TMDB
 
-Projeto com o intuito de exibir os filmes, pesquisados por gêneros e título, sendo possivel a navegação para exibição dos detalhes do filme.
+Projeto está consumindo uma API Rest da themoviedb.org, com o intuito de exibir os filmes pesquisados por gêneros e título, sendo possivel a navegação para exibição dos detalhes do filme.
 
 ## Executar
 
