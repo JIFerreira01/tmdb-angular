@@ -7,3 +7,21 @@
 .announcements h3 {
     font-size: 25px;
 }
+
+@media screen and (max-width: 770px){
+    .announcements {
+        position: inherit;
+        width: 100%;
+        margin-left: 25%;
+        margin-top: 10%;
+    }
+  }
+
+  @media screen and (max-width: 1080px){
+    .announcements {
+        position: inherit;
+        width: 100%;
+        margin-left: 25%;
+        margin-top: 10%;
+    }
+  }

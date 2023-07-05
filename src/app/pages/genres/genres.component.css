@@ -7,6 +7,18 @@
   grid-template-areas: "aside content-main";
 }
 
+@media screen and (max-width: 770px){
+  .content {
+      display: block;
+  }
+}
+
+@media screen and (min-width: 770px) and (max-width: 1080px){
+  .content {
+    grid-template-columns: 27% 76%;
+  }
+}
+
 .content--menu {
   grid-area: aside;
 }
@@ -19,6 +31,7 @@
 .c-genres {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .c-genres__card {

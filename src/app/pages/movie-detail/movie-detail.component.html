@@ -4,7 +4,7 @@
     </section>
     <section class="content__description">
         <span class="content__description--container-title">
-            <h3>{{movieDetail.title}} <span>( {{movieDetail.vote_count}} )</span></h3>
+            <h3>{{movieDetail.title}}</h3>
             <div class="content__description--container-inside-text">
                 <p>{{movieDetail.release_date | date: 'dd/MM/yyyy'}}</p>
                 <ul class="content__description--genres">
@@ -19,6 +19,11 @@
                 <h3>Sinopse</h3>
                 <p>{{movieDetail.overview}}</p>
             </span>
+        </span>
+        <span class="content__description--container-button-back">
+            <button [routerLink]="['/genres']" mat-mini-fab color="accent">
+              <mat-icon>arrow_back</mat-icon>
+            </button>
         </span>
     </section>
 </section>
