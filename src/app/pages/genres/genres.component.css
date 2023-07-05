@@ -47,5 +47,17 @@
   text-transform: none;
 }
 
+.c-genres__container-spinner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  flex-direction: column;
+}
+
+.c-genres__container-spinner p {
+  margin-top: 20px;
+}
   
   

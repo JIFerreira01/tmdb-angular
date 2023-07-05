@@ -1,8 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
-import { MoviesService } from '../../shared/movies.service'
-import { Subscription } from 'rxjs';
+import { MoviesService } from '../../shared/movies.service';
+
+interface chipObject {
+  id: number,
+  name: string
+}
 
 @Component({
   selector: 'app-genres',
@@ -10,44 +13,76 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./genres.component.css']
 })
 
-export class GenresComponent implements OnInit, OnDestroy {
+export class GenresComponent implements OnInit {
 
   genresList: Array<any> = [];
-  movieID: number = 0;
-  inscricao: Subscription = new Subscription();
-
-  constructor(private routes: ActivatedRoute, private service: MoviesService, private router: Router){
-    this.router.events.subscribe((route) => console.log('verificando de emit algo mesmo', route))
-  }
+  displaySpinner: Boolean = false;
+  handleAnnouncements: any;
+  
+  constructor(private service: MoviesService){}
 
   ngOnInit(): void {
-    this.inscricao = this.routes.queryParams.subscribe((queryParams: any) => {
-      this.movieID = queryParams['id'];
-      this.verifyStateOfURL();
-    })
   }
 
-  async callService(genreId?: number) {
-    await this.service.getMoviesWithGenres(genreId).subscribe({
+  getChipSelected() {
+    return document.getElementsByClassName("mat-mdc-chip-selected")[0];
+  }
+
+  callService(genresId: number) {
+    this.displaySpinner = true;
+    this.service.getMoviesWithGenres(genresId).subscribe({
       next: (data: any) => {
-        this.genresList = data.results;
-        console.log('genresList Inside callService', this.genresList)
+        if(data.total_results > 0){
+          this.genresList = [];
+          this.genresList = data.results;
+          this.displaySpinner = false
+        } else {
+          this.handleAnnouncements = 'no_results'
+        }
       },
       error: (error) => ( console.error('error', error) )
     })
   }
 
-  verifyStateOfURL() {    
-    if(this.movieID) {
-      this.callService(this.movieID);
+  verifyChipSelected(paramId: chipObject){
+    let getTextChipSelected: any = '';
+    if(this.getChipSelected()){
+      getTextChipSelected = this.getChipSelected().querySelectorAll(".mdc-evolution-chip__text-label")[0].textContent;
+      if(getTextChipSelected == paramId.name){
+        this.genresList = [];
+      } else {
+        this.callService(paramId.id);
+      }
     } else {
-      this.callService();
-      console.log('genresList after callService', this.genresList)
+      this.callService(paramId.id);
     }
   }
 
-  ngOnDestroy() {
-    this.inscricao.unsubscribe();
+  handleChipIfDataSearchIsCall(){
+
+    if(this.getChipSelected()){
+      const buttonChipSelected = this.getChipSelected().querySelector("button");
+      buttonChipSelected?.dispatchEvent(new Event("click"))
+    }
+  }
+
+  receiveDataToSearch($event: any){
+    const dataFormatted = $event.value.split(" ").join("%");
+
+    this.genresList = [];
+    this.displaySpinner = true
+    this.service.getSearchedMovie(dataFormatted).subscribe({
+      next: (data: any) => {
+        if(data.total_results > 0){
+          this.genresList = data.results;
+          this.displaySpinner = false
+        } else {
+          this.handleAnnouncements = 'no_results'
+        }
+      },
+      error: (error) => ( console.error('error', error) )
+    })
+    this.handleChipIfDataSearchIsCall();
   }
 
 }

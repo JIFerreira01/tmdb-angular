@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MoviesService } from 'src/app/shared/movies.service';
 
@@ -12,10 +12,11 @@ export class MovieDetailComponent implements OnInit{
 
   inscricao: Subscription = new Subscription();
   movieID: number = 0;
-  movieDetail: Object = new Object();
+  movieDetail: any = new Object();
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private movieService: MoviesService
     ) {
 
@@ -23,22 +24,34 @@ export class MovieDetailComponent implements OnInit{
 
   ngOnInit(): void {
     this.inscricao = this.route.queryParams.subscribe((queryParams: any) => {
-      this.movieID = queryParams['id']
+      this.movieID = queryParams['id'];
+    })
+    this.verifyStateOfURL()
+  }
+
+  async callService(genreId?: any) {
+    await this.movieService.getMovieDetail(genreId).subscribe({
+      next: (data: any) => {
+        this.movieDetail = data
+        console.log(this.movieDetail)
+      },
+      error: (error) => ( console.error('error', error) )
     })
   }
 
-  async callService(genreId?: number) {
-    await this.movieService.getMoviesWithGenres(genreId).subscribe({
-      next: (data: any) => this.movieDetail = data.results,
-      error: (error) => ( console.error('error', error) )
-    })
+  convertMinsToHrsMins = function (minutes: any) {
+    let hour: any = Math.floor(minutes / 60);
+    let minute: any = minutes % 60;
+    hour = hour < 10 ? '0' + hour : hour; 
+    minute = minute < 10 ? '0' + minute : minute; 
+    return `${hour}h ${minute}m`;
   }
 
   verifyStateOfURL() {    
     if(this.movieID) {
       this.callService(this.movieID);
     } else {
-      this.callService();
+      this.router.navigate(['/genres'])
     }
   }
 

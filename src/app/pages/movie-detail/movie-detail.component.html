@@ -1,1 +1,24 @@
-<p>IDENTIFICADOR DO FILME {{movieID}}</p>
+<section class="content">
+    <section class="content__image">
+        <img src="https://image.tmdb.org/t/p/original{{movieDetail.poster_path}}">
+    </section>
+    <section class="content__description">
+        <span class="content__description--container-title">
+            <h3>{{movieDetail.title}} <span>( {{movieDetail.vote_count}} )</span></h3>
+            <div class="content__description--container-inside-text">
+                <p>{{movieDetail.release_date | date: 'dd/MM/yyyy'}}</p>
+                <ul class="content__description--genres">
+                    <li *ngFor="let item of movieDetail.genres">{{item.name}},</li>
+                </ul>
+                <p>{{convertMinsToHrsMins(movieDetail.runtime)}}</p>
+            </div>
+        </span>
+        <span class="content__description--container-synopsis">
+            <h4>{{movieDetail.tagline}}</h4>
+            <span>
+                <h3>Sinopse</h3>
+                <p>{{movieDetail.overview}}</p>
+            </span>
+        </span>
+    </section>
+</section>

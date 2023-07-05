@@ -2,14 +2,19 @@
     <section class="menu__search-movies">
         <h3>Buscar: </h3>
         <form>
-            <input placeholder="Insira o filme desejado">
+            <input placeholder="Insira o filme desejado" [formControl]="inputSearch">
+            <div class="example-button-container">
+                <button mat-raised-button (click)="handleInputSearch()" [disabled]="buttonSearchStatus">
+                  <mat-icon>search</mat-icon>
+                </button>
+              </div>
         </form>
     </section>
     <section class="menu__tips-genres">
         <h3>Gêneros</h3>
         <mat-chip-listbox aria-label="Fish selection">
             <ng-template ngFor let-item [ngForOf]="genresList" let-i="index">
-                <mat-chip-option (selectionChange)="handleChips($event)" [routerLink]="['/genres']" [queryParams]="{id: item.id}">{{item.name}}</mat-chip-option>
+                <mat-chip-option (selectionChange)="handleChips(item)">{{item.name}}</mat-chip-option>
             </ng-template>
         </mat-chip-listbox>
     </section>

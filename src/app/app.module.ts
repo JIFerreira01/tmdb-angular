@@ -10,12 +10,13 @@ import {MatCardModule} from '@angular/material/card';
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import {MatMenuModule} from '@angular/material/menu';
-import { CCarouselComponent } from './components/c-carousel/c-carousel.component';
 import { GenresComponent } from './pages/genres/genres.component';
 import { CHeaderComponent } from './components/c-header/c-header.component';
 import { CMenuComponent } from './components/c-menu/c-menu.component';
@@ -25,18 +26,19 @@ import { CAnnouncementsComponent } from './components/c-announcements/c-announce
 @NgModule({
   declarations: [
     AppComponent,
-    CCarouselComponent,
     GenresComponent,
     CHeaderComponent,
     CMenuComponent,
     MovieDetailComponent,
-    CAnnouncementsComponent
+    CAnnouncementsComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     MatInputModule,
+    MatProgressSpinnerModule,
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatCardModule,
     MatToolbarModule,

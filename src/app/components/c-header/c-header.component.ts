@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MoviesService } from '../../shared/movies.service'
 
 @Component({
   selector: 'app-c-header',
@@ -7,22 +6,9 @@ import { MoviesService } from '../../shared/movies.service'
   styleUrls: ['./c-header.component.css']
 })
 
-// interface genres {
-//   genres: Array<object>;
-// }
-
 export class CHeaderComponent implements OnInit {
-
-  genres: Array<any> = [];
-
-  constructor(
-    private api: MoviesService
-  ){}
+  constructor(){}
 
   ngOnInit(): void {
-      this.api.getAllGenres().subscribe({
-        next: (data: any) => this.genres = data.genres,
-        error: (error) => console.log('retornou error', error)
-      })
   }
 }

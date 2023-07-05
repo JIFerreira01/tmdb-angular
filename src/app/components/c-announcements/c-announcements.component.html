@@ -1,3 +1,4 @@
 <section class="announcements">
-    <h3>Faça uma busca ou selecione um gênero.</h3>
+    <h3 *ngIf="receiveHowAnnouncementShow == undefined">Faça uma busca ou selecione um gênero.</h3>
+    <h3 *ngIf="receiveHowAnnouncementShow == 'no_results'">Não houve resultados na sua busca.</h3>
 </section>

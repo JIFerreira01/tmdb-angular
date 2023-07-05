@@ -16,7 +16,8 @@ export class MoviesService {
     }
   };
 
-  genres = 'https://api.themoviedb.org/3/genre/movie/list?language=pt-BR'
+  genres = 'https://api.themoviedb.org/3/genre/movie/list?language=pt-BR';
+  movieSearched: string = '';
 
   constructor(private http: HttpClient) { }
 
@@ -32,5 +33,16 @@ export class MoviesService {
 
   getNowPlaying() {
     return this.http.get<Response>(this.movies, this.options)
+  }
+
+  getSearchedMovie(param: string){
+    const paramFormatted = param.split(' ').join("%")
+    this.movieSearched = `https://api.themoviedb.org/3/search/movie?query=${paramFormatted}`
+    return this.http.get<Response>(this.movieSearched, this.options)
+  }
+
+  getMovieDetail(param: string){
+    const movieDetailURL = `https://api.themoviedb.org/3/movie/${param}?language=pt-BR`
+    return this.http.get<Response>(movieDetailURL, this.options)
   }
 }

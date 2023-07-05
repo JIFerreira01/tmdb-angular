@@ -1,9 +1,7 @@
-import { AfterContentChecked, Component, EventEmitter, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 import { MoviesService } from 'src/app/shared/movies.service';
-
 
 interface structureGenres {
   id: number,
@@ -17,66 +15,37 @@ interface structureGenres {
 })
 
 
-export class CMenuComponent implements OnInit, AfterContentChecked {
+export class CMenuComponent implements OnInit {
 
   genresList: Array<structureGenres> = [];
-  inscricao: Subscription = new Subscription();
-  subscription: Subscription = new Subscription();
-  browserRefresh = false;
-  movieID: number = 0;
+  inputSearch: FormControl = new FormControl('');
+  buttonSearchStatus: Boolean = true;
 
-  constructor(private route: ActivatedRoute, private router: Router, private service: MoviesService){
-    // this.subscription = router.events.subscribe((event) => {
-    //   if(event instanceof NavigationStart) {
-    //     this.browserRefresh = router.navigated;
-    //     console.log('refresh na pagina')
-    //   }
-    // })
-  }
-
-  ngOnInit(): void {
-    this.callService();
-    this.inscricao = this.route.queryParams.subscribe((queryParams: any) => {
-      this.movieID = queryParams['id']
+  constructor(private service: MoviesService){
+    this.inputSearch.valueChanges.subscribe((changes) => {
+      changes === "" ? this.buttonSearchStatus = true : this.buttonSearchStatus = false;
     })
   }
 
-  ngAfterContentChecked(): void {
-      this.genresList.length > 0 ? this.handleListChips() : null;
-      if(this.browserRefresh){
-        console.log('refresh na pagina')
-      }
+  @Output() search = new EventEmitter<any>();
+  @Output() chipSelect = new EventEmitter<any>();
+
+  ngOnInit(): void {
+    this.callService();
   }
 
-  async callService() {
-    await this.service.getAllGenres().subscribe({
+  callService() {
+    this.service.getAllGenres().subscribe({
       next: (data: any) => this.genresList = data.genres,
       error: (error) => ( console.error('error', error) )
     })
   }
 
-  handleListChips() {
-    // const idGenres: number = this.movieID;
-    // let objectGenreSelected: any = new Object();
-    // let getChipsThatWillSet = document.getElementsByClassName('mdc-evolution-chip-set__chips');
-
-    // if(idGenres && getChipsThatWillSet[0].childNodes.length > 0){
-    //   objectGenreSelected = this.genresList.find((id) => id.id == idGenres ? id : false)
-      // for(let i = 0; i <= getChipsThatWillSet[0].childNodes.lenth; )
-      // getChipsThatWillSet[0].childNodes.forEach((each) => {
-      //   if(each.textContent == objectGenreSelected.name){
-      //     each.dispatchEvent(new Event('click'));
-      //   }
-      //   return false;
-      // })
-    //   console.log('objectGenreSelected', objectGenreSelected)
-    // }
-
-    // console.log('contem ID', this.movieID)
-    // console.log('genresList carregado', this.genresList)
+  handleInputSearch() {
+    this.search.emit(this.inputSearch)
   }
 
-  handleChips(a: any) {
-    console.log('hndleChips', a)
+  handleChips(chip: Object) {
+    this.chipSelect.emit(chip)
   }
 }
